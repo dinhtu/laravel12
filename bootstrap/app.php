@@ -1,0 +1,44 @@
+<?php
+
+use App\Http\Middleware\AdminHandleInertiaRequests;
+use App\Http\Middleware\SiteAdmin;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Route;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        // web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+        using: function () {
+            Route::middleware('siteAdmin')
+                ->prefix('admin')
+                ->group(base_path('routes/admin.php'));
+
+            // Route::middleware('web')
+            //     ->group(base_path('routes/web.php'));
+
+            // Route::middleware('apiMiddleware')
+            //     ->prefix('api/v1')
+            //     ->group(base_path('routes/api.php'));
+        },
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->appendToGroup('siteAdmin', [
+            StartSession::class,
+            SiteAdmin::class,
+            AdminHandleInertiaRequests::class,
+            AddQueuedCookiesToResponse::class,
+            ShareErrorsFromSession::class,
+            SubstituteBindings::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
