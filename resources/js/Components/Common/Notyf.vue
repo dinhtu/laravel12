@@ -1,7 +1,7 @@
 <template>
   <Toast />
 </template>
-<script lang="ts">
+<script>
 import { useToast } from 'primevue/usetoast';
 import { useRequestStore } from '@/store/request';
 export default {

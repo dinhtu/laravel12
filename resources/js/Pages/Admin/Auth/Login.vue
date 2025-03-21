@@ -1,6 +1,5 @@
 <script setup>
 import GuestLayout from '@/Layouts/Admin/GuestLayout.vue';
-import FloatingConfigurator from '@/Components/Common/FloatingConfigurator.vue';
 
 import { useForm, Link } from '@inertiajs/inertia-vue3';
 import { ref, reactive, onMounted, watch } from 'vue';
@@ -76,7 +75,6 @@ configure({
     <template #content>
       <VeeForm as="div" v-slot="{ handleSubmit }" @invalid-submit="onInvalidSubmit">
         <form @submit="handleSubmit($event, onSubmit)">
-          <FloatingConfigurator />
           <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
             <div class="flex flex-col items-center justify-center">
               <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">

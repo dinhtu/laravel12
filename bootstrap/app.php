@@ -9,7 +9,10 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AssignGuard;
+use App\Http\Middleware\Admin;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -38,7 +41,26 @@ return Application::configure(basePath: dirname(__DIR__))
             ShareErrorsFromSession::class,
             SubstituteBindings::class,
         ]);
+        $middleware->alias([
+            'assign.guard' => AssignGuard::class,
+            'admin' => Admin::class,
+            'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+            'jwt.verify' => \App\Http\Middleware\JwtVerify::class,
+            'auth.jwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (\Exception $e, Request $request) {
+            if ($request->is('api/*')) {
+                $statusCode = 500;
+                try {
+                    $statusCode = $e->getStatusCode();
+                } catch (\Throwable $th) {
+                }
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'status_code' => $statusCode
+                ]);
+            }
+        });
     })->create();

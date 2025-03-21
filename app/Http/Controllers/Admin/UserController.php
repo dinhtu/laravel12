@@ -25,14 +25,10 @@ class UserController extends BaseController
     public function index(Request $request): \Inertia\Response
     {
         $users = $this->user->get($request);
-        $breadcrumbs = [
-            ['name' => 'ユーザー一覧'],
-        ];
         session()->forget('admin.user.list');
         session()->push('admin.user.list', url()->full());
 
         return Inertia::render('Admin/User/Index', $this->mergeSession([
-            'breadcrumbs' => $breadcrumbs,
             'data' => [
                 'title' => 'ユーザー一覧',
                 'users' => $users->items(),
