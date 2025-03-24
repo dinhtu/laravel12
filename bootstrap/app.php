@@ -31,9 +31,9 @@ return Application::configure(basePath: dirname(__DIR__))
             // Route::middleware('web')
             //     ->group(base_path('routes/web.php'));
 
-            // Route::middleware('apiMiddleware')
-            //     ->prefix('api/v1')
-            //     ->group(base_path('routes/api.php'));
+            Route::middleware('apiMiddleware')
+                ->prefix('api/v1')
+                ->group(base_path('routes/api.php'));
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
@@ -53,6 +53,10 @@ return Application::configure(basePath: dirname(__DIR__))
             AddQueuedCookiesToResponse::class,
             ShareErrorsFromSession::class,
             SubstituteBindings::class,
+        ]);
+
+        $middleware->appendToGroup('apiMiddleware', [
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
         $middleware->alias([
             'assign.guard' => AssignGuard::class,

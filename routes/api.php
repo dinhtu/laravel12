@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\User\LandingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [LandingController::class, 'index']);
+Route::post('login', \App\Http\Actions\Api\Auth\LoginAction::class);
+Route::group([
+    'middleware' => ['jwt.verify', 'auth.jwt'],
+], function () {
+    Route::get('user-info', \App\Http\Actions\Api\Auth\UserInfoAction::class);
+    Route::get('logout', \App\Http\Actions\Api\Auth\LogoutAction::class);
+});
