@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Middleware\AdminHandleInertiaRequests;
+use App\Http\Middleware\UserHandleInertiaRequests;
 use App\Http\Middleware\SiteAdmin;
+use App\Http\Middleware\SiteUser;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -23,6 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware('siteAdmin')
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
+            Route::middleware('siteUser')
+                ->group(base_path('routes/user.php'));
 
             // Route::middleware('web')
             //     ->group(base_path('routes/web.php'));
@@ -37,6 +41,15 @@ return Application::configure(basePath: dirname(__DIR__))
             StartSession::class,
             SiteAdmin::class,
             AdminHandleInertiaRequests::class,
+            AddQueuedCookiesToResponse::class,
+            ShareErrorsFromSession::class,
+            SubstituteBindings::class,
+        ]);
+
+        $middleware->appendToGroup('siteUser', [
+            StartSession::class,
+            SiteUser::class,
+            UserHandleInertiaRequests::class,
             AddQueuedCookiesToResponse::class,
             ShareErrorsFromSession::class,
             SubstituteBindings::class,

@@ -26,8 +26,10 @@
 
         @if (isset($isAdmin) && $isAdmin)
             @vite(['resources/js/admin.js', "resources/js/Pages/{$page['component']}.vue"])
-        @else
-            @vite(['resources/js/admin.js', "resources/js/Pages/{$page['component']}.vue"])
+        @endif
+
+        @if (isset($isUser) && $isUser)
+            @vite(['resources/js/user.js', "resources/js/Pages/{$page['component']}.vue"])
         @endif
     @inertiaHead
 </head>

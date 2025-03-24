@@ -16,7 +16,7 @@ export default defineConfig({
       }
     }),
     laravel({
-      input: 'resources/js/admin.js',
+      input: ['resources/js/admin.js', 'resources/js/user.js'],
       refresh: true
     }),
 
