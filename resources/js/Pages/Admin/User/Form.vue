@@ -120,6 +120,7 @@ const onSubmit = () => {
                     @blur="flagValidateUnique = true"
                     v-model="state.model.email"
                     v-bind="field"
+                    autocomplete="username"
                     v-on:update:model-value="handleChange"
                     :class="{
                       'p-invalid': !metaField.valid && metaField.touched
