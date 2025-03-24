@@ -60,10 +60,19 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
       <div class="layout-topbar-menu hidden lg:block">
         <div class="layout-topbar-menu-content">
-          <button type="button" class="layout-topbar-action">
+          <button v-styleclass="{ selector: '@next', enterFromClass: 'hidden', enterActiveClass: 'animate-scalein', leaveToClass: 'hidden', leaveActiveClass: 'animate-fadeout', hideOnOutsideClick: true }" type="button" class="layout-topbar-action">
             <i class="pi pi-user"></i>
             <span>Profile</span>
           </button>
+          <div
+            class="config-panel hidden absolute top-[3.25rem] right-10 w-50 p-0 bg-surface-0 dark:bg-surface-900 border border-surface rounded-border origin-top shadow-[0px_3px_5px_rgba(0,0,0,0.02),0px_0px_2px_rgba(0,0,0,0.05),0px_1px_4px_rgba(0,0,0,0.08)]"
+          >
+            <div class="flex flex-col gap-4">
+              <Link :href="route('admin.logout')">
+                <Button variant="link" label="ログアウト" icon="pi pi-sign-out" />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

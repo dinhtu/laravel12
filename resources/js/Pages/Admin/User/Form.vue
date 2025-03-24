@@ -95,12 +95,13 @@ const onSubmit = () => {
             <div class="form-group">
               <label class="form-label" require>ユーザー名: </label>
               <div class="form-input">
-                <Field name="name" rules="max:255" v-model="state.model.name" v-slot="{ meta: metaField, handleChange }">
+                <Field name="name" rules="required|max:255" v-model="state.model.name" v-slot="{ field, meta: metaField, handleChange }">
                   <InputText
                     class="w-full"
                     type="text"
                     v-model="state.model.name"
                     v-on:update:model-value="handleChange"
+                    v-bind="field"
                     :class="{
                       'p-invalid': !metaField.valid && metaField.touched
                     }"
@@ -112,12 +113,13 @@ const onSubmit = () => {
             <div class="form-group">
               <label class="form-label" require>メールアドレス: </label>
               <div class="form-input">
-                <Field name="email" :rules="flagValidateUnique ? 'required|email|unique_custom|max:255' : 'required|email|max:255'" v-model="state.model.email" v-slot="{ meta: metaField, handleChange }">
+                <Field name="email" :rules="flagValidateUnique ? 'required|email|unique_custom|max:255' : 'required|email|max:255'" v-model="state.model.email" v-slot="{ field, meta: metaField, handleChange }">
                   <InputText
                     class="w-full"
                     @keypress="flagValidateUnique = false"
                     @blur="flagValidateUnique = true"
                     v-model="state.model.email"
+                    v-bind="field"
                     v-on:update:model-value="handleChange"
                     :class="{
                       'p-invalid': !metaField.valid && metaField.touched
