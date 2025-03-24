@@ -121,7 +121,7 @@ configure({
                         showIcon="pi pi-eye-slash"
                         :feedback="false"
                         aria-describedby="password-error"
-                        autocomplete="current-password"
+                        :inputProps="{ autocomplete: 'off' }"
                         v-on:update:model-value="handleChange"
                         toggleMask
                         fluid

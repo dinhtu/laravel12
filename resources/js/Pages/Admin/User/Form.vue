@@ -143,7 +143,7 @@ const onSubmit = () => {
                     showIcon="pi pi-eye-slash"
                     :feedback="false"
                     aria-describedby="password-error"
-                    autocomplete="new-password"
+                    :inputProps="{ autocomplete: 'new-password' }"
                     v-on:update:model-value="handleChange"
                     toggleMask
                     class="w-full"
