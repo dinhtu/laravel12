@@ -7,13 +7,13 @@
       <Column field="quantity" header="Quantity"></Column>
     </DataTable>
     <span class="left">表示件数</span>
-    <Dropdown v-model="limit" :options="limitPageOption" class="w-120 ml-2">
+    <Select v-model="limit" :options="limitPageOption" class="w-120 ml-2">
       <template #value="slotProps">
         <span>
           {{ slotProps.value + '件' }}
         </span>
       </template>
-    </Dropdown>
+    </Select>
     <!-- <Dropdown
       id="pageSize"
       class="form-select page-size-select cursor-point"
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       model: useForm({}),
-      limit: this.$page.props.data.request.limit_page ? this.$page.props.data.request.limit_page : 20,
+      limit: this.$page.props.data.request.limit_page ? parseInt(this.$page.props.data.request.limit_page) : 20,
       limitPageOption: [
         20, 50, 100
         // { label: '20件', value: 20 },
@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     onChange(event) {
-      console.log(event.value);
       //   let pathname = window.location.pathname
       //   let search = window.location.search
       //   if (search.indexOf('limit_page=') >= 0) {

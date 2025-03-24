@@ -39,7 +39,7 @@ class AdminHandleInertiaRequests extends Middleware
         $dataSession = '';
         if (session()->get('Message.flash')) {
             $dataSession = session()->get('Message.flash')[0];
-            session()->forget('Message.flash');
+            // session()->forget('Message.flash');
         }
         $leftMenu = [
             [
@@ -52,7 +52,7 @@ class AdminHandleInertiaRequests extends Middleware
                 'label' => 'ユーザー一覧',
                 'icon' => 'pi pi-fw pi-users',
                 'to' => route('admin.user.index'),
-                'active' => in_array($routeName, ['admin.user.index']),
+                'active' => in_array($routeName, ['admin.user.index', 'admin.user.create', 'admin.user.edit', 'admin.user.store', 'admin.user.update']),
             ]
         ];
         $breadcrumbs = [
@@ -61,10 +61,10 @@ class AdminHandleInertiaRequests extends Middleware
         if (in_array($routeName, ['admin.user.index', 'admin.user.create', 'admin.user.edit', 'admin.user.store', 'admin.user.update'])) {
             $breadcrumbs[] = ['label' => 'ユーザー一覧', 'icon' => 'pi pi-list', 'url' => session()->get('admin.user.list')[0] ?? route('admin.user.index')];
             if (in_array($routeName, ['admin.user.edit', 'admin.user.update'])) {
-                $breadcrumbs[] = ['label' => 'ユーザー編集', 'icon' => 'pi pi-user-edit', 'url' => route('admin.user.edit', $request->user)];
+                $breadcrumbs[] = ['label' => 'ユーザー追加', 'icon' => 'pi pi-user-edit', 'url' => route('admin.user.edit', $request->user)];
             }
             if (in_array($routeName, ['admin.user.create', 'admin.user.store'])) {
-                $breadcrumbs[] = ['label' => 'ユーザー新規作成', 'icon' => 'pi pi-user-plus', 'url' => route('admin.user.create')];
+                $breadcrumbs[] = ['label' => 'ユーザー追加', 'icon' => 'pi pi-user-plus', 'url' => route('admin.user.create')];
             }
         }
 

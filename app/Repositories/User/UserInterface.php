@@ -2,7 +2,7 @@
 
 namespace App\Repositories\User;
 
-use App\Http\Requests\Admin\StoreUserRequest;
+use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;

@@ -3,7 +3,7 @@
 namespace App\Repositories\User;
 
 use App\Components\CommonComponent;
-use App\Http\Requests\Admin\StoreUserRequest;
+use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

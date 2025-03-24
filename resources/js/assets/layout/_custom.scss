@@ -156,7 +156,7 @@
 }
 
 .p-datatable-tbody > tr.p-row-odd {
-  background: #f8f8fa;
+  background: var(--p-panel-header-background);
 }
 
 .action-divider {
@@ -177,4 +177,43 @@
 }
 .swal2-styled {
   min-width: 120px;
+}
+.form-group {
+  display: flex;
+  margin-top:10px;
+  .form-label {
+      text-align: right;
+      width: 30%;
+      padding-right:20px;
+      font-weight: 500;
+      position: relative;
+      margin-top:12px;
+      *[require]:after {
+          position: absolute;
+          margin-left: 2px;
+          font-size: 12px;
+          color: red;
+          content: "\203b";
+          top: -5px;
+      }
+  }
+  .form-input {
+      width: 50%;
+  }
+}
+
+.form-action {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  .btn-action {
+      min-width: 100px;
+      &:first-child {
+          margin-right: 10px;
+      }
+      &:last-child {
+          margin-left: 10px;
+      }
+  }
 }

@@ -3,26 +3,6 @@ import AdminLayout from '@/Layouts/Admin/AppLayout.vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { useRequestStore } from '@/store/request';
 import { ref, onMounted } from 'vue';
-const products = ref([
-  {
-    code: 'P1001',
-    name: 'Product 1',
-    category: 'Category 1',
-    quantity: 10
-  },
-  {
-    code: 'P1002',
-    name: 'Product 2',
-    category: 'Category 2',
-    quantity: 20
-  },
-  {
-    code: 'P1003',
-    name: 'Product 3',
-    category: 'Category 3',
-    quantity: 30
-  }
-]);
 </script>
 <template>
   <AdminLayout>
@@ -35,7 +15,7 @@ const products = ref([
               <LimitPageOption />
             </div>
             <div class="group-paginate">
-              <Paginator :paginator="$page.props.data.paginator"></Paginator>
+              <PaginatorCustom :paginator="$page.props.data.paginator"></PaginatorCustom>
             </div>
           </div>
 
@@ -75,7 +55,7 @@ const products = ref([
             </div>
           </div>
           <div class="group-paginate w-full mt-1">
-            <Paginator :paginator="$page.props.data.paginator"></Paginator>
+            <PaginatorCustom :paginator="$page.props.data.paginator"></PaginatorCustom>
           </div>
         </template>
         <DataEmpty v-else></DataEmpty>

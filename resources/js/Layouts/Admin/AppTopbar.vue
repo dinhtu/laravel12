@@ -11,7 +11,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
       <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
         <i class="pi pi-bars"></i>
       </button>
-      <router-link to="/" class="layout-topbar-logo">
+      <Link :href="route('admin.dashboard.index')" class="layout-topbar-logo">
         <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
@@ -30,8 +30,8 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
           </g>
         </svg>
 
-        <span>SAKAI</span>
-      </router-link>
+        <span>LARAVEL</span>
+      </Link>
     </div>
 
     <div class="layout-topbar-actions">

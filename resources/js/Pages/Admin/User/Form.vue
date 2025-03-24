@@ -1,44 +1,38 @@
 <script setup>
-import AdminLayout from "@/Layouts/Admin/Layout.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
-import { useRequestStore } from "@/store/request";
-import { ref, onMounted, reactive } from "vue";
-import $ from "jquery";
-import {
-  Form as VeeForm,
-  Field,
-  ErrorMessage,
-  defineRule,
-  configure,
-} from "vee-validate";
-import { localize } from "@vee-validate/i18n";
-import * as rules from "@vee-validate/rules";
-import axios from "axios";
+import AdminLayout from '@/Layouts/Admin/AppLayout.vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { useRequestStore } from '@/store/request';
+import { ref, onMounted, reactive } from 'vue';
+import $ from 'jquery';
+import { Form as VeeForm, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
+import { localize } from '@vee-validate/i18n';
+import * as rules from '@vee-validate/rules';
+import axios from 'axios';
 Object.keys(rules).forEach((rule) => {
-  if (rule != "default") {
+  if (rule != 'default' && rule != 'all') {
     defineRule(rule, rules[rule]);
   }
 });
 const state = reactive({
   model: {
-    name: "",
-    email: "",
-    password: "",
-  },
+    name: '',
+    email: '',
+    password: ''
+  }
 });
-const props = defineProps(["data"]);
+const props = defineProps(['data']);
 onMounted(() => {
   if (props.data.isEdit) {
     state.model = props.data.user;
   }
 });
 const flagValidateUnique = ref(true);
-defineRule("unique_custom", (value) => {
+defineRule('unique_custom', (value) => {
   return axios
-    .post(route("admin.user.checkEmail"), {
+    .post(route('admin.user.checkEmail'), {
       _token: Laravel.csrfToken,
       value: value,
-      id: props.data.user?.id,
+      id: props.data.user?.id
     })
     .then(function (response) {
       return response.data.valid;
@@ -48,16 +42,13 @@ defineRule("unique_custom", (value) => {
 const onInvalidSubmit = ({ errors }) => {
   let firstInputError = Object.entries(errors)[0][0];
   let ele = $('[name="' + firstInputError + '"]');
-  if (
-    $('[name="' + firstInputError + '"]').hasClass("hidden") ||
-    $('[name="' + firstInputError + '"]').attr("type") == "hidden"
-  ) {
-    ele = $('[name="' + firstInputError + '"]').closest("div");
+  if ($('[name="' + firstInputError + '"]').hasClass('hidden') || $('[name="' + firstInputError + '"]').attr('type') == 'hidden') {
+    ele = $('[name="' + firstInputError + '"]').closest('div');
   }
   ele.focus();
-  $("html, body").animate(
+  $('html, body').animate(
     {
-      scrollTop: ele.offset().top - 150 + "px",
+      scrollTop: ele.offset().top - 150 + 'px'
     },
     500
   );
@@ -66,157 +57,112 @@ let messError = {
   en: {
     fields: {
       name: {
-        required: "ユーザー名を入力してください。",
-        max: "ユーザー名は255文字を超えてはなりません。",
+        required: 'ユーザー名を入力してください。',
+        max: 'ユーザー名は255文字を超えてはなりません。'
       },
       email: {
-        required: "メールアドレスを入力してください。",
-        max: "メールアドレスは255文字を超えてはなりません。",
-        unique_custom: "このメールアドレスは既に登録されています。",
-        email: "メールアドレスを正確に入力してください。",
+        required: 'メールアドレスを入力してください。',
+        max: 'メールアドレスは255文字を超えてはなりません。',
+        unique_custom: 'このメールアドレスは既に登録されています。',
+        email: 'メールアドレスを正確に入力してください。'
       },
       password: {
-        required: "パスワードを入力してください。",
-        max: "半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。",
-        min: "半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。",
-        password_rule:
-          "半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。",
-      },
-    },
-  },
+        required: 'パスワードを入力してください。',
+        max: '半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。',
+        min: '半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。',
+        password_rule: '半角英字、数字、記号を組み合わせて10文字以上16文字以内で入力してください。'
+      }
+    }
+  }
 };
 configure({
-  generateMessage: localize(messError),
+  generateMessage: localize(messError)
 });
 const onSubmit = () => {
   if (props.data.isEdit) {
-    useForm(state.model).put(route("admin.user.update", props.data.user.id));
+    useForm(state.model).put(route('admin.user.update', props.data.user.id));
     return;
   }
-  useForm(state.model).post(route("admin.user.store"));
+  useForm(state.model).post(route('admin.user.store'));
 };
 </script>
 <template>
   <AdminLayout>
     <template #content>
-      <div class="card mb-3">
-        <Panel :header="$page.props.data.title">
-          <VeeForm
-            as="div"
-            v-slot="{ handleSubmit }"
-            @invalid-submit="onInvalidSubmit"
-          >
-            <form
-              @submit="handleSubmit($event, onSubmit)"
-              ref="formData"
-              id="formData"
-              class="form-data"
-            >
-              <div class="form-group">
-                <label class="form-label" require>ユーザー名: </label>
-                <div class="form-input">
-                  <Field
-                    name="name"
-                    rules="required|max:255"
+      <Panel :header="$page.props.data.title">
+        <VeeForm as="div" v-slot="{ handleSubmit }" @invalid-submit="onInvalidSubmit">
+          <form @submit="handleSubmit($event, onSubmit)" class="form-data">
+            <div class="form-group">
+              <label class="form-label" require>ユーザー名: </label>
+              <div class="form-input">
+                <Field name="name" rules="max:255" v-model="state.model.name" v-slot="{ meta: metaField, handleChange }">
+                  <InputText
+                    class="w-full"
+                    type="text"
                     v-model="state.model.name"
-                    v-slot="{ meta: metaField, handleChange }"
-                  >
-                    <InputText
-                      class="w-12"
-                      v-model="state.model.name"
-                      v-on:update:model-value="handleChange"
-                      :class="{
-                        'p-invalid': !metaField.valid && metaField.touched,
-                      }"
-                    />
-                    <ErrorMessage class="p-error" name="name" />
-                  </Field>
-                </div>
+                    v-on:update:model-value="handleChange"
+                    :class="{
+                      'p-invalid': !metaField.valid && metaField.touched
+                    }"
+                  />
+                  <ErrorMessage class="p-error" name="name" />
+                </Field>
               </div>
-              <div class="form-group">
-                <label class="form-label" require>メールアドレス: </label>
-                <div class="form-input">
-                  <Field
-                    name="email"
-                    :rules="
-                      flagValidateUnique
-                        ? 'required|email|unique_custom|max:255'
-                        : 'required|email|max:255'
-                    "
+            </div>
+            <div class="form-group">
+              <label class="form-label" require>メールアドレス: </label>
+              <div class="form-input">
+                <Field name="email" :rules="flagValidateUnique ? 'required|email|unique_custom|max:255' : 'required|email|max:255'" v-model="state.model.email" v-slot="{ meta: metaField, handleChange }">
+                  <InputText
+                    class="w-full"
+                    @keypress="flagValidateUnique = false"
+                    @blur="flagValidateUnique = true"
                     v-model="state.model.email"
-                    v-slot="{ meta: metaField, handleChange }"
-                  >
-                    <InputText
-                      class="w-12"
-                      @keypress="flagValidateUnique = false"
-                      @blur="flagValidateUnique = true"
-                      v-model="state.model.email"
-                      v-on:update:model-value="handleChange"
-                      :class="{
-                        'p-invalid': !metaField.valid && metaField.touched,
-                      }"
-                    />
-                    <ErrorMessage class="p-error" name="email" />
-                  </Field>
-                </div>
+                    v-on:update:model-value="handleChange"
+                    :class="{
+                      'p-invalid': !metaField.valid && metaField.touched
+                    }"
+                  />
+                  <ErrorMessage class="p-error" name="email" />
+                </Field>
               </div>
-              <div class="form-group">
-                <label class="form-label" v-if="props.data.isEdit"
-                  >パスワード:
-                </label>
-                <label class="form-label" v-else require>パスワード: </label>
-                <div class="form-input">
-                  <Field
-                    name="password"
-                    :rules="
-                      props.data.isEdit
-                        ? 'max:16|min:10|password_rule'
-                        : 'required|max:16|min:10|password_rule'
-                    "
+            </div>
+            <div class="form-group">
+              <label class="form-label" v-if="props.data.isEdit">パスワード: </label>
+              <label class="form-label" v-else require>パスワード: </label>
+              <div class="form-input">
+                <Field name="password" :rules="props.data.isEdit ? 'max:16|min:10|password_rule' : 'required|max:16|min:10|password_rule'" v-model="state.model.password" v-slot="{ field, meta: metaField, handleChange }">
+                  <Password
+                    v-bind="field"
                     v-model="state.model.password"
-                    v-slot="{ field, meta: metaField, handleChange }"
-                  >
-                    <Password
-                      v-bind="field"
-                      v-model="state.model.password"
-                      inputClass="w-full"
-                      placeholder="パスワード"
-                      hideIcon="pi pi-eye"
-                      showIcon="pi pi-eye-slash"
-                      :feedback="false"
-                      aria-describedby="password-error"
-                      autocomplete="current-password"
-                      v-on:update:model-value="handleChange"
-                      toggleMask
-                      class="w-full"
-                      :class="{
-                        'p-invalid': !metaField.valid && metaField.touched,
-                      }"
-                    />
-                    <ErrorMessage class="p-error" name="password" />
-                  </Field>
-                </div>
+                    inputClass="w-full"
+                    placeholder="パスワード"
+                    hideIcon="pi pi-eye"
+                    showIcon="pi pi-eye-slash"
+                    :feedback="false"
+                    aria-describedby="password-error"
+                    autocomplete="new-password"
+                    v-on:update:model-value="handleChange"
+                    toggleMask
+                    class="w-full"
+                    :class="{
+                      'p-invalid': !metaField.valid && metaField.touched
+                    }"
+                  />
+                  <ErrorMessage class="p-error" name="password" />
+                </Field>
               </div>
+            </div>
 
-              <div class="form-action">
-                <Button
-                  label="登録"
-                  type="submit"
-                  icon="pi pi-save"
-                  class="btn-action"
-                ></Button>
-                <Link :href="$page.props.data.urlBack">
-                  <Button
-                    label="キャンセル "
-                    icon="pi pi-arrow-left"
-                    class="btn-action"
-                  ></Button>
-                </Link>
-              </div>
-            </form>
-          </VeeForm>
-        </Panel>
-      </div>
+            <div class="form-action">
+              <Link :href="$page.props.data.urlBack">
+                <Button label="キャンセル " icon="pi pi-arrow-left" class="btn-action"></Button>
+              </Link>
+              <Button label="登録" type="submit" icon="pi pi-save" class="btn-action"></Button>
+            </div>
+          </form>
+        </VeeForm>
+      </Panel>
     </template>
   </AdminLayout>
 </template>

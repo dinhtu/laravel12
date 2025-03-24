@@ -3,6 +3,8 @@ import { useLayout } from '@/Layouts/Admin/Composables/layout';
 import { computed, ref, watch } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import SpinBeforeLoaded from '@/Components/Common/SpinBeforeLoaded.vue';
+import NotyfValidate from '@/Components/Common/NotyfValidate.vue';
+import NotyfAxios from '@/Components/Common/NotyfAxios.vue';
 import Notyf from '@/Components/Common/Notyf.vue';
 import AppSidebar from './AppSidebar.vue';
 import AppTopbar from './AppTopbar.vue';
@@ -64,8 +66,10 @@ const items = ref([{ label: 'Electronics' }, { label: 'Computer' }, { label: 'Ac
 
 <template>
   <Head :title="$page.props.data.title" />
-  <Notyf :data="$page.props.dataSession" />
+  <Notyf />
+  <NotyfValidate :data="$page.props.errors" />
   <SpinBeforeLoaded />
+  <NotyfAxios />
   <div class="layout-wrapper" :class="containerClass">
     <app-topbar></app-topbar>
     <app-sidebar></app-sidebar>

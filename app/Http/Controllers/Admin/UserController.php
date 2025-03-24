@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Components\SearchQueryComponent;
 use App\Enums\StatusCode;
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\Admin\StoreUserRequest;
+use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,13 +48,7 @@ class UserController extends BaseController
      */
     public function create()
     {
-        $breadcrumbs = [
-            ['name' => 'ユーザー一覧', 'url' => session()->get('admin.user.list')[0] ?? route('admin.user.index')],
-            ['name' => 'ユーザー追加'],
-        ];
-
         return Inertia::render('Admin/User/Form', [
-            'breadcrumbs' => $breadcrumbs,
             'data' => [
                 'title' => 'ユーザー追加',
                 'urlBack' => session()->get('admin.user.list')[0] ?? route('admin.user.index'),
@@ -75,15 +69,6 @@ class UserController extends BaseController
         $this->setFlash(__('エラーが発生しました。'), 'error');
 
         return redirect()->route('admin.user.create');
-
-        // if ($this->user->store($request)) {
-        //     $this->setFlash(__('ユーザー新規登録が完了しました。'), 'success', route('admin.user.show', $createdUser->id));
-        //     return redirect()->route('admin.user.create')
-        //         ->with(['userCreated' => true, 'user' => $createdUser]);
-        // }
-        // $this->setFlash(__('エラーが発生しました。'), 'error');
-        // return redirect()->route('admin.user.create');
-        // dd($request->all());
     }
 
     /**
@@ -104,13 +89,8 @@ class UserController extends BaseController
 
             return redirect()->route('admin.user.index');
         }
-        $breadcrumbs = [
-            ['name' => 'ユーザー一覧', 'url' => session()->get('admin.user.list')[0] ?? route('admin.user.index')],
-            ['name' => 'ユーザー追加'],
-        ];
 
         return Inertia::render('Admin/User/Form', [
-            'breadcrumbs' => $breadcrumbs,
             'data' => [
                 'title' => 'ユーザー追加',
                 'user' => $user,
