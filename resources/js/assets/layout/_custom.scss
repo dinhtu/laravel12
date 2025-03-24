@@ -180,25 +180,25 @@
 }
 .form-group {
   display: flex;
-  margin-top:10px;
+  margin-top: 10px;
   .form-label {
-      text-align: right;
-      width: 30%;
-      padding-right:20px;
-      font-weight: 500;
-      position: relative;
-      margin-top:12px;
-      *[require]:after {
-          position: absolute;
-          margin-left: 2px;
-          font-size: 12px;
-          color: red;
-          content: "\203b";
-          top: -5px;
-      }
+    text-align: right;
+    width: 30%;
+    padding-right: 20px;
+    font-weight: 500;
+    position: relative;
+    margin-top: 12px;
+    *[require]:after {
+      position: absolute;
+      margin-left: 2px;
+      font-size: 12px;
+      color: red;
+      content: '\203b';
+      top: -5px;
+    }
   }
   .form-input {
-      width: 50%;
+    width: 50%;
   }
 }
 
@@ -208,12 +208,15 @@
   display: flex;
   justify-content: center;
   .btn-action {
-      min-width: 100px;
-      &:first-child {
-          margin-right: 10px;
-      }
-      &:last-child {
-          margin-left: 10px;
-      }
+    min-width: 100px;
+    &:first-child {
+      margin-right: 10px;
+    }
+    &:last-child {
+      margin-left: 10px;
+    }
   }
+}
+.p-toast-message-success {
+  border-color: var(--p-button-primary-background) !important;
 }

@@ -52,7 +52,7 @@ const confirmDelete = () => {
     title: props.messageConfirm,
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
+    confirmButtonColor: 'var(--p-button-primary-background)',
     cancelButtonColor: '#d33',
     confirmButtonText: '削除',
     cancelButtonText: 'キャンセル'
