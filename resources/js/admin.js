@@ -4,6 +4,7 @@ import moment from 'moment';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 
+import * as rules from '@vee-validate/rules';
 import { configure, defineRule } from 'vee-validate';
 configure({
   validateOnBlur: false,
@@ -13,6 +14,11 @@ configure({
 });
 const app = createApp({});
 
+Object.keys(rules).forEach((rule) => {
+  if (rule != 'default' && rule != 'all') {
+    defineRule(rule, rules[rule]);
+  }
+});
 defineRule('custom_confirm', (value, arg) => {
   return /^[A-Za-z0-9]*$/i.test(value);
 });

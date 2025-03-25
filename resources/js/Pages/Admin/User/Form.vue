@@ -6,13 +6,7 @@ import { ref, onMounted, reactive } from 'vue';
 import $ from 'jquery';
 import { Form as VeeForm, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
 import { localize } from '@vee-validate/i18n';
-import * as rules from '@vee-validate/rules';
 import axios from 'axios';
-Object.keys(rules).forEach((rule) => {
-  if (rule != 'default' && rule != 'all') {
-    defineRule(rule, rules[rule]);
-  }
-});
 const state = reactive({
   model: {
     name: '',

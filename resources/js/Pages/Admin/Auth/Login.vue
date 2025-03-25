@@ -6,7 +6,6 @@ import { ref, reactive, onMounted, watch } from 'vue';
 import $ from 'jquery';
 import { Form as VeeForm, Field, ErrorMessage, defineRule, configure } from 'vee-validate';
 import { localize } from '@vee-validate/i18n';
-import * as rules from '@vee-validate/rules';
 const state = reactive({
   model: {
     email: '',
@@ -17,11 +16,6 @@ const state = reactive({
   message: ''
 });
 const props = defineProps(['data']);
-Object.keys(rules).forEach((rule) => {
-  if (rule != 'default' && rule != 'all') {
-    defineRule(rule, rules[rule]);
-  }
-});
 const onSubmit = () => {
   useForm(state.model).post(route('admin.login.store'));
 };
