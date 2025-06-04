@@ -6,9 +6,6 @@ use App\Enums\StatusCode;
 use App\Exceptions\Http\HttpException;
 use Exception;
 
-/**
- * UMITO APIにおけるリソース操作時にコンフリクトが起きた場合
- */
 class ResourceConflictException extends HttpException
 {
     /**

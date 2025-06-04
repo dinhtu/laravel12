@@ -6,9 +6,6 @@ use App\Enums\StatusCode;
 use App\Exceptions\Http\HttpException;
 use Exception;
 
-/**
- * UMITO APIのリクエストパラメータが不正な場合の例外
- */
 class InvalidRequestParameterException extends HttpException
 {
     /**

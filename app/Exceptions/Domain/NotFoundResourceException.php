@@ -6,9 +6,6 @@ use App\Enums\StatusCode;
 use App\Exceptions\Http\HttpException;
 use Exception;
 
-/**
- * UMITO API実行の際にデータが存在しない場合
- */
 class NotFoundResourceException extends HttpException
 {
     /**

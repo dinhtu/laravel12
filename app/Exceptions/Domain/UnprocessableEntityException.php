@@ -6,9 +6,6 @@ use App\Enums\StatusCode;
 use App\Exceptions\Http\HttpException;
 use Exception;
 
-/**
- * UMITO APIのValidationで問題があった場合の例外
- */
 class UnprocessableEntityException extends HttpException
 {
     /**
